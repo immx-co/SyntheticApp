@@ -1,0 +1,149 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:rxui="http://reactiveui.net"
+        xmlns:app="clr-namespace:SyntheticUI"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:SyntheticUI.ViewModels"
+        mc:Ignorable="d"
+        x:Class="SyntheticUI.Views.NavigationWindow"
+        Title="Dangerous Situations Recognition"
+        Width="1600" Height="900" MinWidth="1100" MinHeight="750"
+        x:DataType="vm:NavigationViewModel"
+        Icon="/Assets/avalonia-logo.ico">
+
+  <Window.Styles>
+    <Style Selector="Button#navToggleButton">
+      <Setter Property="Width" Value="36"/>
+      <Setter Property="Height" Value="36"/>
+      <Setter Property="Margin" Value="0,0,10,0"/>
+      <Setter Property="Padding" Value="0"/>
+      <Setter Property="CornerRadius" Value="4"/>
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="BorderBrush" Value="Transparent"/>
+      <Setter Property="HorizontalContentAlignment" Value="Center"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
+    <Style Selector="Button#navToggleButton:pointerover">
+      <Setter Property="Background" Value="#20000000"/>
+    </Style>
+
+    <Style Selector="Button#navToggleButton:pressed">
+      <Setter Property="Background" Value="#40000000"/>
+    </Style>
+
+    <Style Selector="Button.nav-button:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#FFE0E7EF"/>
+    </Style>
+    <Style Selector="Button.nav-button.active">
+      <Setter Property="Background" Value="#FFD1DBE8"/>
+      <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+    <Style Selector="Button.nav-sub-button:pointerover /template/ ContentPresenter">
+      <Setter Property="Background" Value="#FFE8EDF4"/>
+    </Style>
+    <Style Selector="Button.nav-sub-button.active">
+      <Setter Property="Background" Value="#FFD1DBE8"/>
+    </Style>
+  </Window.Styles>
+  
+  <Grid Background="{StaticResource SecondaryGradient}">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <!-- Боковая панель навигации (без кнопки) -->
+    <Border Grid.Column="0"
+            Background="#FFF5F7FA"
+            BorderBrush="#FFE0E7EF"
+            BorderThickness="0,0,1,0"
+            Width="{Binding NavPanelWidth}">
+      <StackPanel Orientation="Vertical" Spacing="4" Margin="4">
+        <Button Content="Аугментировать" 
+                Command="{Binding ToggleAugmentCommand}"
+                Classes="nav-button"
+                Classes.active="{Binding IsAugmentExpanded}"/>
+        <StackPanel Orientation="Vertical" 
+                    Margin="20, 0, 0, 0" 
+                    IsVisible="{Binding IsAugmentExpanded}">
+          <Button Content="Детектор"></Button>
+          <Button Content="Классификатор"></Button>
+        </StackPanel>
+
+        <Button Content="Обучить" 
+                Command="{Binding ToggleTrainCommand}"
+                Classes="nav-button"
+                Classes.active="{Binding IsTrainExpanded}"/>
+        <StackPanel Orientation="Vertical"
+                    Margin="20, 0, 0, 0"
+                    IsVisible="{Binding IsTrainExpanded}">
+          <Button Content="Детектор"></Button>
+          <Button Content="Классификатор"></Button>
+        </StackPanel>
+
+        <Button Content="Оценить" 
+                Command="{Binding ToggleEvaluateCommand}"
+                Classes="nav-button"
+                Classes.active="{Binding IsEvaluateExpanded}"/>
+        <StackPanel Orientation="Vertical"
+                    Margin="20, 0, 0, 0"
+                    IsVisible="{Binding IsEvaluateExpanded}">
+          <Button Content="Детектор"></Button>
+          <Button Content="Классификатор"></Button>
+        </StackPanel>
+
+        <Button Content="Протестировать" 
+                Command="{Binding ToggleTestCommand}"
+                Classes="nav-button"
+                Classes.active="{Binding IsTestExpanded}"/>
+        <StackPanel Orientation="Vertical"
+                    Margin="20, 0, 0, 0"
+                    IsVisible="{Binding IsTestExpanded}">
+          <Button Content="Детектор"></Button>
+          <Button Content="Классификатор"></Button>
+        </StackPanel>
+      </StackPanel>
+    </Border>
+
+    <!-- Основное содержимое -->
+    <Grid Grid.Column="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <!-- Верхняя панель с кнопкой навигации и заголовком -->
+      <Border Grid.Row="0"
+              Background="#FFF5F7FA"
+              BorderBrush="#FFE0E7EF"
+              BorderThickness="0,0,0,1"
+              Padding="12">
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+
+          <Button Grid.Column="0"
+                  x:Name="navToggleButton"
+                  Command="{Binding ToggleNavigationCommand}"
+                  VerticalAlignment="Center">
+            <Path Data="{Binding NavToggleButtonContent}"
+                  Width="16"
+                  Height="16"
+                  Fill="#FF444444"
+                  Stretch="Uniform"/>
+          </Button>
+        </Grid>
+      </Border>
+
+      <rxui:RoutedViewHost Grid.Row="1" Router="{Binding Router}" Margin="10">
+        <rxui:RoutedViewHost.ViewLocator>
+          <app:AppViewLocator />
+        </rxui:RoutedViewHost.ViewLocator>
+      </rxui:RoutedViewHost>
+    </Grid>
+  </Grid>
+</Window>
