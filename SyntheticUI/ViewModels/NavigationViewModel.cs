@@ -114,9 +114,13 @@ public class NavigationViewModel : ReactiveObject, IDisposable
     public ReactiveCommand<Unit, Unit> ToggleEvaluateCommand { get; }
 
     public ReactiveCommand<Unit, Unit> ToggleTestCommand { get; }
-    #endregion
 
-    public NavigationViewModel(IScreen screenRealization, IServiceProvider serviceProvider)
+    public ReactiveCommand<Unit, Unit> GoAugmentationDetectorWindow { get; }
+
+    public ReactiveCommand<Unit, Unit> GoAugmentationClassificatorWindow { get; }
+	#endregion
+
+	public NavigationViewModel(IScreen screenRealization, IServiceProvider serviceProvider)
     {
         Router = screenRealization.Router;
         _serviceProvider = serviceProvider;
@@ -145,6 +149,9 @@ public class NavigationViewModel : ReactiveObject, IDisposable
             IsTestExpanded = !IsTestExpanded;
             await Task.CompletedTask;
         });
+
+        GoAugmentationDetectorWindow = ReactiveCommand.Create(NavigateToAugmentationDetectorWindow);
+        GoAugmentationClassificatorWindow = ReactiveCommand.Create(NavigateToAugmentationClassificatorWindow);
     }
 
     #region Private Methods
@@ -162,12 +169,20 @@ public class NavigationViewModel : ReactiveObject, IDisposable
         }
     }
 
-    private void NavigateToAugmentWindow()
+    private void NavigateToAugmentationDetectorWindow()
     {
         CheckDisposedCancelletionToken();
+        Router.Navigate.Execute(_serviceProvider.GetRequiredService<AugmentationDetectorViewModel>());
     }
 
-    private void CheckDisposedCancelletionToken()
+	private void NavigateToAugmentationClassificatorWindow()
+	{
+		CheckDisposedCancelletionToken();
+		Router.Navigate.Execute(_serviceProvider.GetRequiredService<AugmentationClassificatorViewModel>());
+	}
+
+
+	private void CheckDisposedCancelletionToken()
     {
         if (Router.NavigationStack.Count > 0)
         {

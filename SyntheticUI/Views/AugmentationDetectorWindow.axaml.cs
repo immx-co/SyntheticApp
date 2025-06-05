@@ -1,13 +1,15 @@
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using Avalonia.ReactiveUI;
+using ReactiveUI;
+using SyntheticUI.ViewModels;
 
-namespace SyntheticUI;
+namespace SyntheticUI.Views;
 
-public partial class AugmentationDetectorWindow : UserControl
+public partial class AugmentationDetectorWindow : ReactiveUserControl<AugmentationDetectorViewModel>
 {
     public AugmentationDetectorWindow()
     {
-        InitializeComponent();
-    }
+		this.WhenActivated(disposables => { });
+		AvaloniaXamlLoader.Load(this);
+	}
 }

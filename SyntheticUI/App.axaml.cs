@@ -31,6 +31,8 @@ namespace SyntheticUI
                 servicesCollection.AddSingleton<IScreen, IScreenRealization>();
 
                 servicesCollection.AddSingleton<NavigationViewModel>();
+                servicesCollection.AddSingleton<AugmentationClassificatorViewModel>();
+                servicesCollection.AddSingleton<AugmentationDetectorViewModel>();
 
                 ServiceProvider servicesProvider = servicesCollection.BuildServiceProvider();
 

@@ -68,8 +68,10 @@
         <StackPanel Orientation="Vertical" 
                     Margin="20, 0, 0, 0" 
                     IsVisible="{Binding IsAugmentExpanded}">
-          <Button Content="Детектор"></Button>
-          <Button Content="Классификатор"></Button>
+          <Button Content="Детектор"
+				  Command="{Binding GoAugmentationDetectorWindow}"></Button>
+          <Button Content="Классификатор"
+				  Command="{Binding GoAugmentationClassificatorWindow}"></Button>
         </StackPanel>
 
         <Button Content="Обучить" 
