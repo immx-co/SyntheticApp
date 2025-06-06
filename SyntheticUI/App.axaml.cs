@@ -33,6 +33,12 @@ namespace SyntheticUI
                 servicesCollection.AddSingleton<NavigationViewModel>();
                 servicesCollection.AddSingleton<AugmentationClassificatorViewModel>();
                 servicesCollection.AddSingleton<AugmentationDetectorViewModel>();
+                servicesCollection.AddSingleton<TrainingClassificatorViewModel>();
+                servicesCollection.AddSingleton<TrainingDetectorViewModel>();
+                servicesCollection.AddSingleton<EvaluateClassificatorViewModel>();
+                servicesCollection.AddSingleton<EvaluateDetectorViewModel>();
+                servicesCollection.AddSingleton<TestingDetectorViewModel>();
+                servicesCollection.AddSingleton<TestingClassificatorViewModel>();
 
                 ServiceProvider servicesProvider = servicesCollection.BuildServiceProvider();
 

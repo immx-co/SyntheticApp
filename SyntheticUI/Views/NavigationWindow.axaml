@@ -81,8 +81,10 @@
         <StackPanel Orientation="Vertical"
                     Margin="20, 0, 0, 0"
                     IsVisible="{Binding IsTrainExpanded}">
-          <Button Content="Детектор"></Button>
-          <Button Content="Классификатор"></Button>
+          <Button Content="Детектор"
+				  Command="{Binding GoTrainingDetectorWindow}"/>
+			<Button Content="Классификатор"
+					Command="{Binding GoTrainingClassificatorWindow}"/>
         </StackPanel>
 
         <Button Content="Оценить" 
@@ -92,8 +94,10 @@
         <StackPanel Orientation="Vertical"
                     Margin="20, 0, 0, 0"
                     IsVisible="{Binding IsEvaluateExpanded}">
-          <Button Content="Детектор"></Button>
-          <Button Content="Классификатор"></Button>
+          <Button Content="Детектор"
+				  Command="{Binding GoEvaluateDetectorWindow}"/>
+			<Button Content="Классификатор"
+					Command="{Binding GoEvaluateClassificatorWindow}"/>
         </StackPanel>
 
         <Button Content="Протестировать" 
@@ -103,8 +107,10 @@
         <StackPanel Orientation="Vertical"
                     Margin="20, 0, 0, 0"
                     IsVisible="{Binding IsTestExpanded}">
-          <Button Content="Детектор"></Button>
-          <Button Content="Классификатор"></Button>
+          <Button Content="Детектор"
+				  Command="{Binding GoTestingDetectorWindow}"/>
+          <Button Content="Классификатор"
+				  Command="{Binding GoTestingClassificatorWindow}"/>
         </StackPanel>
       </StackPanel>
     </Border>

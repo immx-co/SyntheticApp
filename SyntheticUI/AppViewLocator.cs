@@ -11,6 +11,10 @@ namespace SyntheticUI
         {
             AugmentationClassificatorViewModel context  => new AugmentationClassificatorWindow { ViewModel = context },
             AugmentationDetectorViewModel context => new AugmentationDetectorWindow { ViewModel = context },
+            TrainingClassificatorViewModel context => new TrainingClassificatorWindow { ViewModel = context },
+            TrainingDetectorViewModel context => new TrainingDetectorWindow { ViewModel = context },
+            EvaluateClassificatorViewModel context => new EvaluateClassifierWindow { ViewModel = context },
+            EvaluateDetectorViewModel context => new EvaluateDetectorWindow { ViewModel = context },
             _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
         };
     }

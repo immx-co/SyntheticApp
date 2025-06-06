@@ -118,6 +118,18 @@ public class NavigationViewModel : ReactiveObject, IDisposable
     public ReactiveCommand<Unit, Unit> GoAugmentationDetectorWindow { get; }
 
     public ReactiveCommand<Unit, Unit> GoAugmentationClassificatorWindow { get; }
+
+    public ReactiveCommand<Unit, Unit> GoTrainingDetectorWindow { get; }
+
+    public ReactiveCommand<Unit, Unit> GoTrainingClassificatorWindow { get; }
+
+    public ReactiveCommand<Unit, Unit> GoEvaluateClassificatorWindow { get; }
+
+    public ReactiveCommand<Unit, Unit> GoEvaluateDetectorWindow { get; }
+
+    public ReactiveCommand<Unit, Unit> GoTestingClassificatorWindow { get; }
+
+    public ReactiveCommand<Unit, Unit> GoTestingDetectorWindow { get; }
 	#endregion
 
 	public NavigationViewModel(IScreen screenRealization, IServiceProvider serviceProvider)
@@ -152,7 +164,13 @@ public class NavigationViewModel : ReactiveObject, IDisposable
 
         GoAugmentationDetectorWindow = ReactiveCommand.Create(NavigateToAugmentationDetectorWindow);
         GoAugmentationClassificatorWindow = ReactiveCommand.Create(NavigateToAugmentationClassificatorWindow);
-    }
+		GoTrainingDetectorWindow = ReactiveCommand.Create(NavigateToTrainingDetectorWindow);
+        GoTrainingClassificatorWindow = ReactiveCommand.Create(NavigateToTrainingClassificatorWindow);
+        GoEvaluateClassificatorWindow = ReactiveCommand.Create(NavigateToEvaluateClassificatorWindow);
+        GoEvaluateDetectorWindow = ReactiveCommand.Create(NavigateToEvaluateDetectorWindow);
+        GoTestingClassificatorWindow = ReactiveCommand.Create(NavigateToTestingClassificatorWindow);
+        GoTestingDetectorWindow = ReactiveCommand.Create(NavigateToTestingDetectorWindow);
+	}
 
     #region Private Methods
     private void ToggleNavigation()
@@ -179,6 +197,42 @@ public class NavigationViewModel : ReactiveObject, IDisposable
 	{
 		CheckDisposedCancelletionToken();
 		Router.Navigate.Execute(_serviceProvider.GetRequiredService<AugmentationClassificatorViewModel>());
+	}
+
+    private void NavigateToTrainingClassificatorWindow()
+    {
+        CheckDisposedCancelletionToken();
+        Router.Navigate.Execute(_serviceProvider.GetRequiredService<TrainingClassificatorViewModel>());
+    }
+
+	private void NavigateToTrainingDetectorWindow()
+	{
+		CheckDisposedCancelletionToken();
+		Router.Navigate.Execute(_serviceProvider.GetRequiredService<TrainingDetectorViewModel>());
+	}
+
+    private void NavigateToEvaluateClassificatorWindow()
+    {
+        CheckDisposedCancelletionToken();
+        Router.Navigate.Execute(_serviceProvider.GetRequiredService<EvaluateClassificatorViewModel>());
+    }
+
+	private void NavigateToEvaluateDetectorWindow()
+	{
+		CheckDisposedCancelletionToken();
+		Router.Navigate.Execute(_serviceProvider.GetRequiredService<EvaluateDetectorViewModel>());
+	}
+
+    private void NavigateToTestingClassificatorWindow()
+    {
+        CheckDisposedCancelletionToken();
+        Router.Navigate.Execute(_serviceProvider.GetRequiredService<TestingClassificatorViewModel>());
+    }
+
+	private void NavigateToTestingDetectorWindow()
+	{
+		CheckDisposedCancelletionToken();
+		Router.Navigate.Execute(_serviceProvider.GetRequiredService<TestingDetectorViewModel>());
 	}
 
 

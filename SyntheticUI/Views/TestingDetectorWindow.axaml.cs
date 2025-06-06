@@ -1,13 +1,15 @@
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using Avalonia.ReactiveUI;
+using SyntheticUI.ViewModels;
+using ReactiveUI;
 
 namespace SyntheticUI;
 
-public partial class TestingDetectorWindow : UserControl
+public partial class TestingDetectorWindow : ReactiveUserControl<TestingDetectorViewModel>
 {
     public TestingDetectorWindow()
     {
-        InitializeComponent();
-    }
+		this.WhenActivated(disposables => { });
+		AvaloniaXamlLoader.Load(this);
+	}
 }

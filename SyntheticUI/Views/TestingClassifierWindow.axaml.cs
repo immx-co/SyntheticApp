@@ -1,13 +1,15 @@
-using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using Avalonia.ReactiveUI;
+using ReactiveUI;
+using SyntheticUI.ViewModels;
 
 namespace SyntheticUI;
 
-public partial class TestingClassifierWindow : UserControl
+public partial class TestingClassifierWindow : ReactiveUserControl<TestingClassificatorViewModel>
 {
     public TestingClassifierWindow()
     {
-        InitializeComponent();
-    }
+		this.WhenActivated(disposables => { });
+		AvaloniaXamlLoader.Load(this);
+	}
 }
