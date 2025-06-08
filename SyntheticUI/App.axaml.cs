@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
@@ -13,6 +14,20 @@ namespace SyntheticUI
 {
     public partial class App : Application
     {
+        public new static App? Current => Application.Current as App;
+
+        public Window? CurrentWindow
+        {
+            get
+            {
+                if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                {
+                    return desktop.MainWindow;
+                }
+                else return null;
+            }
+        }
+
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);

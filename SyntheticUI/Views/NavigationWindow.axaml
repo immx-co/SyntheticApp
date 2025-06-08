@@ -7,7 +7,7 @@
         xmlns:vm="using:SyntheticUI.ViewModels"
         mc:Ignorable="d"
         x:Class="SyntheticUI.Views.NavigationWindow"
-        Title="Dangerous Situations Recognition"
+        Title="Synthetic App"
         Width="1600" Height="900" MinWidth="1100" MinHeight="750"
         x:DataType="vm:NavigationViewModel"
         Icon="/Assets/avalonia-logo.ico">
@@ -68,10 +68,12 @@
         <StackPanel Orientation="Vertical" 
                     Margin="20, 0, 0, 0" 
                     IsVisible="{Binding IsAugmentExpanded}">
-          <Button Content="Детектор"
-				  Command="{Binding GoAugmentationDetectorWindow}"></Button>
-          <Button Content="Классификатор"
-				  Command="{Binding GoAugmentationClassificatorWindow}"></Button>
+          <ToggleButton Content="Детектор"
+				                Command="{Binding GoAugmentationDetectorWindow}"
+                        IsChecked="{Binding IsAugmentDetectorWindowActive}"/>
+          <ToggleButton Content="Классификатор"
+				                Command="{Binding GoAugmentationClassificatorWindow}"
+                        IsChecked="{Binding IsAugmentClassificatorWindowActive}"/>
         </StackPanel>
 
         <Button Content="Обучить" 
@@ -81,10 +83,12 @@
         <StackPanel Orientation="Vertical"
                     Margin="20, 0, 0, 0"
                     IsVisible="{Binding IsTrainExpanded}">
-          <Button Content="Детектор"
-				  Command="{Binding GoTrainingDetectorWindow}"/>
-			<Button Content="Классификатор"
-					Command="{Binding GoTrainingClassificatorWindow}"/>
+          <ToggleButton Content="Детектор"
+				                Command="{Binding GoTrainingDetectorWindow}"
+                        IsChecked="{Binding IsLearnDetectorWindowActive}"/>
+          <ToggleButton Content="Классификатор"
+					              Command="{Binding GoTrainingClassificatorWindow}"
+                        IsChecked="{Binding IsLearnClassificatorWindowActive}"/>
         </StackPanel>
 
         <Button Content="Оценить" 
@@ -94,10 +98,12 @@
         <StackPanel Orientation="Vertical"
                     Margin="20, 0, 0, 0"
                     IsVisible="{Binding IsEvaluateExpanded}">
-          <Button Content="Детектор"
-				  Command="{Binding GoEvaluateDetectorWindow}"/>
-			<Button Content="Классификатор"
-					Command="{Binding GoEvaluateClassificatorWindow}"/>
+          <ToggleButton Content="Детектор"
+				                Command="{Binding GoEvaluateDetectorWindow}"
+                        IsChecked="{Binding IsEvaluateDetectorWindowActive}"/>
+          <ToggleButton Content="Классификатор"
+					              Command="{Binding GoEvaluateClassificatorWindow}"
+                        IsChecked="{Binding IsEvaluateClassificatorWindowActive}"/>
         </StackPanel>
 
         <Button Content="Протестировать" 
@@ -107,10 +113,12 @@
         <StackPanel Orientation="Vertical"
                     Margin="20, 0, 0, 0"
                     IsVisible="{Binding IsTestExpanded}">
-          <Button Content="Детектор"
-				  Command="{Binding GoTestingDetectorWindow}"/>
-          <Button Content="Классификатор"
-				  Command="{Binding GoTestingClassificatorWindow}"/>
+          <ToggleButton Content="Детектор"
+				                Command="{Binding GoTestingDetectorWindow}"
+                        IsChecked="{Binding IsTestDetectorWindowActive}"/>
+          <ToggleButton Content="Классификатор"
+				                Command="{Binding GoTestingClassificatorWindow}"
+                        IsChecked="{Binding IsTestClassificatorWindowActive}"/>
         </StackPanel>
       </StackPanel>
     </Border>

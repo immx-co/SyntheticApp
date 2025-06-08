@@ -7,6 +7,100 @@
              x:Class="SyntheticUI.TrainingClassificatorWindow"
 			 x:DataType="vm:TrainingClassificatorViewModel">
 
-	<TextBlock>Здарова, я TrainingClassificatorWindow</TextBlock>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="200"/>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+
+    <StackPanel Grid.Column="0" Margin="10" Spacing="10">
+      <TextBlock Text="Параметры обучения" FontWeight="Bold"/>
+
+      <StackPanel Spacing="5">
+        <TextBlock Text="Модель:"/>
+        <ComboBox ItemsSource="{Binding AvailableModels}"
+                  SelectedItem="{Binding SelectedModel}">
+          <ComboBox.ItemTemplate>
+            <DataTemplate>
+              <TextBlock Text="{Binding}"/>
+            </DataTemplate>
+          </ComboBox.ItemTemplate>
+        </ComboBox>
+      </StackPanel>
+
+      <StackPanel Spacing="5">
+        <TextBlock Text="Папка для весов:"/>
+        <StackPanel Orientation="Horizontal" Spacing="5">
+          <TextBox Text="{Binding WeightsOutputPath}"
+                  Watermark="Выберите папку..."
+                  IsReadOnly="True"/>
+          <Button Content="..." Command="{Binding SelectOutputFolderCommand}"
+                  Width="30"/>
+        </StackPanel>
+      </StackPanel>
+
+      <StackPanel Spacing="5">
+        <TextBlock Text="Количество эпох:"/>
+        <NumericUpDown Value="{Binding Epochs}" Minimum="1" Maximum="1000"/>
+      </StackPanel>
+
+      <StackPanel Spacing="5">
+        <TextBlock Text="Размер батча:"/>
+        <NumericUpDown Value="{Binding BatchSize}" Minimum="1" Maximum="256"/>
+      </StackPanel>
+
+      <StackPanel Spacing="5">
+        <TextBlock Text="Скорость обучения:"/>
+        <TextBox Text="{Binding LearningRate}"/>
+      </StackPanel>
+
+      <StackPanel Spacing="5">
+        <TextBlock Text="Размер изображения:"/>
+        <TextBox Text="{Binding ImageSize}"/>
+      </StackPanel>
+
+      <Expander Header="Дополнительные параметры">
+        <StackPanel Spacing="5" Margin="5,0,0,0">
+          <CheckBox Content="Использовать аугментацию"
+                    IsChecked="{Binding UseAugmentation}"/>
+
+          <CheckBox Content="Сохранять лучшие веса"
+                    IsChecked="{Binding SaveBestWeights}"/>
+
+          <CheckBox Content="Ранняя остановка"
+                    IsChecked="{Binding UseEarlyStopping}"/>
+
+          <StackPanel Spacing="5" IsVisible="{Binding UseEarlyStopping}">
+            <TextBlock Text="Пациенс:" Margin="20,0,0,0"/>
+            <NumericUpDown Value="{Binding EarlyStoppingPatience}"
+                          Minimum="1" Maximum="50"/>
+          </StackPanel>
+        </StackPanel>
+      </Expander>
+    </StackPanel>
+
+    <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="20">
+      <TextBlock Text="Процесс обучения классификатора" FontSize="20" HorizontalAlignment="Center"/>
+
+      <ProgressBar Value="{Binding TrainingProgress}"
+                  Minimum="0" Maximum="100"
+                  Width="300" Height="20"
+                  IsIndeterminate="{Binding IsTrainingIndeterminate}"/>
+
+      <TextBlock Text="{Binding TrainingStatus}" HorizontalAlignment="Center"/>
+
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+        <Button Content="Начать обучение" Command="{Binding StartTrainingCommand}"
+                IsEnabled="{Binding CanStartTraining}"/>
+        <Button Content="Остановить" Command="{Binding StopTrainingCommand}"
+                IsEnabled="{Binding CanStopTraining}"/>
+      </StackPanel>
+
+      <TextBox Text="{Binding TrainingLog}" IsReadOnly="True"
+              Width="500" Height="200"
+              ScrollViewer.VerticalScrollBarVisibility="Auto"
+              AcceptsReturn="True"/>
+    </StackPanel>
+  </Grid>
 	
 </UserControl>

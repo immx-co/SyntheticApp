@@ -15,6 +15,8 @@ namespace SyntheticUI
             TrainingDetectorViewModel context => new TrainingDetectorWindow { ViewModel = context },
             EvaluateClassificatorViewModel context => new EvaluateClassifierWindow { ViewModel = context },
             EvaluateDetectorViewModel context => new EvaluateDetectorWindow { ViewModel = context },
+            TestingClassificatorViewModel context => new TestingClassifierWindow { ViewModel = context },
+            TestingDetectorViewModel context => new TestingDetectorWindow { ViewModel = context},
             _ => throw new ArgumentOutOfRangeException(nameof(viewModel))
         };
     }

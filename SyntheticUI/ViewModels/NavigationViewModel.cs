@@ -31,32 +31,60 @@ public class NavigationViewModel : ReactiveObject, IDisposable
     #endregion
 
     #region Active View Properties
-    private bool _isAugmentWindowActive;
-    public bool IsAugmentWindowActive
+    private bool _isAugmentDetectorWindowActive;
+    public bool IsAugmentDetectorWindowActive
     {
-        get => _isAugmentWindowActive;
-        set => this.RaiseAndSetIfChanged(ref _isAugmentWindowActive, value);
+        get => _isAugmentDetectorWindowActive;
+        set => this.RaiseAndSetIfChanged(ref _isAugmentDetectorWindowActive, value);
     }
 
-    private bool _isLearnWindowActive;
-    public bool IsLearnWindowActive
+    private bool _isAugmentClassificatorWindowActive;
+    public bool IsAugmentClassificatorWindowActive
     {
-        get => _isLearnWindowActive;
-        set => this.RaiseAndSetIfChanged(ref _isLearnWindowActive, value);
+        get => _isAugmentClassificatorWindowActive;
+        set => this.RaiseAndSetIfChanged(ref _isAugmentClassificatorWindowActive, value);
     }
 
-    private bool _isEvaluateWindowActive;
-    public bool IsEvaluateWindowActive
+    private bool _isLearnDetectorWindowActive;
+    public bool IsLearnDetectorWindowActive
     {
-        get => _isEvaluateWindowActive;
-        set => this.RaiseAndSetIfChanged(ref _isEvaluateWindowActive, value);
+        get => _isLearnDetectorWindowActive;
+        set => this.RaiseAndSetIfChanged(ref _isLearnDetectorWindowActive, value);
     }
 
-    private bool _isTestWindowActive;
-    public bool IsTestWindowActive
+    private bool _isLearnClassificatorWindowActive;
+    public bool IsLearnClassificatorWindowActive
     {
-        get => _isTestWindowActive;
-        set => this.RaiseAndSetIfChanged(ref _isTestWindowActive, value);
+        get => _isLearnClassificatorWindowActive;
+        set => this.RaiseAndSetIfChanged(ref _isLearnClassificatorWindowActive, value);
+    }
+
+    private bool _isEvaluateDetectorWindowActive;
+    public bool IsEvaluateDetectorWindowActive
+    {
+        get => _isEvaluateDetectorWindowActive;
+        set => this.RaiseAndSetIfChanged(ref _isEvaluateDetectorWindowActive, value);
+    }
+
+    private bool _isEvaluateClassificatorWindowActive;
+    public bool IsEvaluateClassificatorWindowActive
+    {
+        get => _isEvaluateClassificatorWindowActive;
+        set => this.RaiseAndSetIfChanged(ref _isEvaluateClassificatorWindowActive, value);
+    }
+
+    private bool _isTestDetectorWindowActive;
+    public bool IsTestDetectorWindowActive
+    {
+        get => _isTestDetectorWindowActive;
+        set => this.RaiseAndSetIfChanged(ref _isTestDetectorWindowActive, value);
+    }
+
+    private bool _isTestClassificatorWindowActive;
+    public bool IsTestClassificatorWindowActive
+    {
+        get => _isTestClassificatorWindowActive;
+        set => this.RaiseAndSetIfChanged(ref _isTestClassificatorWindowActive, value);
     }
     #endregion
 
@@ -173,6 +201,18 @@ public class NavigationViewModel : ReactiveObject, IDisposable
 	}
 
     #region Private Methods
+    private void SetActiveView(Type viewModelType)
+    {
+        IsAugmentDetectorWindowActive = viewModelType == typeof(AugmentationDetectorViewModel);
+        IsAugmentClassificatorWindowActive = viewModelType == typeof(AugmentationClassificatorViewModel);
+        IsLearnDetectorWindowActive = viewModelType == typeof(TrainingDetectorViewModel);
+        IsLearnClassificatorWindowActive = viewModelType == typeof(TrainingClassificatorViewModel);
+        IsEvaluateDetectorWindowActive = viewModelType == typeof(EvaluateDetectorViewModel);
+        IsEvaluateClassificatorWindowActive = viewModelType == typeof(EvaluateClassificatorViewModel);
+        IsTestDetectorWindowActive = viewModelType == typeof(TestingDetectorViewModel);
+        IsTestClassificatorWindowActive = viewModelType == typeof(TestingClassificatorViewModel);
+    }
+
     private void ToggleNavigation()
     {
         if (NavPanelWidth > 0)
@@ -190,49 +230,57 @@ public class NavigationViewModel : ReactiveObject, IDisposable
     private void NavigateToAugmentationDetectorWindow()
     {
         CheckDisposedCancelletionToken();
+        SetActiveView(typeof(AugmentationDetectorViewModel));
         Router.Navigate.Execute(_serviceProvider.GetRequiredService<AugmentationDetectorViewModel>());
     }
 
 	private void NavigateToAugmentationClassificatorWindow()
 	{
 		CheckDisposedCancelletionToken();
-		Router.Navigate.Execute(_serviceProvider.GetRequiredService<AugmentationClassificatorViewModel>());
+        SetActiveView(typeof(AugmentationClassificatorViewModel));
+        Router.Navigate.Execute(_serviceProvider.GetRequiredService<AugmentationClassificatorViewModel>());
 	}
 
     private void NavigateToTrainingClassificatorWindow()
     {
         CheckDisposedCancelletionToken();
+        SetActiveView(typeof(TrainingClassificatorViewModel));
         Router.Navigate.Execute(_serviceProvider.GetRequiredService<TrainingClassificatorViewModel>());
     }
 
 	private void NavigateToTrainingDetectorWindow()
 	{
 		CheckDisposedCancelletionToken();
-		Router.Navigate.Execute(_serviceProvider.GetRequiredService<TrainingDetectorViewModel>());
+        SetActiveView(typeof(TrainingDetectorViewModel));
+        Router.Navigate.Execute(_serviceProvider.GetRequiredService<TrainingDetectorViewModel>());
 	}
 
     private void NavigateToEvaluateClassificatorWindow()
     {
         CheckDisposedCancelletionToken();
+        SetActiveView(typeof(EvaluateClassificatorViewModel));
         Router.Navigate.Execute(_serviceProvider.GetRequiredService<EvaluateClassificatorViewModel>());
     }
 
 	private void NavigateToEvaluateDetectorWindow()
 	{
 		CheckDisposedCancelletionToken();
-		Router.Navigate.Execute(_serviceProvider.GetRequiredService<EvaluateDetectorViewModel>());
+        SetActiveView(typeof(EvaluateDetectorViewModel));
+        Router.Navigate.Execute(_serviceProvider.GetRequiredService<EvaluateDetectorViewModel>());
 	}
 
     private void NavigateToTestingClassificatorWindow()
     {
         CheckDisposedCancelletionToken();
+        SetActiveView(typeof(TestingClassificatorViewModel));
         Router.Navigate.Execute(_serviceProvider.GetRequiredService<TestingClassificatorViewModel>());
     }
 
 	private void NavigateToTestingDetectorWindow()
 	{
 		CheckDisposedCancelletionToken();
-		Router.Navigate.Execute(_serviceProvider.GetRequiredService<TestingDetectorViewModel>());
+        SetActiveView(typeof(TestingDetectorViewModel));
+        Router.Navigate.Execute(_serviceProvider.GetRequiredService<TestingDetectorViewModel>());
 	}
 
 
