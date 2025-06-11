@@ -3,6 +3,9 @@ using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Threading;
+using Avalonia.Collections;
+using Avalonia.Controls;
+using System.Runtime.InteropServices;
 
 namespace SyntheticUI.ViewModels;
 
@@ -23,8 +26,16 @@ public class EvaluateDetectorViewModel : ReactiveObject, IRoutableViewModel
     public ReactiveCommand<Unit, Unit> EvaluateCommand { get; }
     #endregion
 
-    #region Properties
-    public ObservableCollection<MetricItem> Metrics { get; }
+    #region Private Fields
+    private AvaloniaList<MetricItem> _metrics;
+	#endregion
+
+	#region Properties
+	public AvaloniaList<MetricItem> Metrics
+    {
+        get => _metrics;
+        set => this.RaiseAndSetIfChanged(ref _metrics, value);
+    }
     #endregion
 
     #region .ctor
@@ -34,30 +45,10 @@ public class EvaluateDetectorViewModel : ReactiveObject, IRoutableViewModel
 
 		_serviceProvider = serviceProvider;
 
-        LoadDatasetCommand = ReactiveCommand.Create(LoadDataset);
-        EvaluateCommand = ReactiveCommand.Create(Evaluate);
+        _metrics = new AvaloniaList<MetricItem>();
 
-        Metrics = new ObservableCollection<MetricItem>
-        {
-            new MetricItem
-            {
-                ClassName = "Vehicle",
-                Precision = 0.85,
-                Recall = 0.78,
-                F1Score = 0.81,
-                mAP50 = 0.79,
-                mAP50_95 = 0.72
-            },
-            new MetricItem
-            {
-                ClassName = "Pedestrian",
-                Precision = 0.76,
-                Recall = 0.82,
-                F1Score = 0.79,
-                mAP50 = 0.81,
-                mAP50_95 = 0.75
-            }
-        };
+		LoadDatasetCommand = ReactiveCommand.Create(LoadDataset);
+        EvaluateCommand = ReactiveCommand.Create(Evaluate);
     }
     #endregion
 
@@ -71,17 +62,17 @@ public class EvaluateDetectorViewModel : ReactiveObject, IRoutableViewModel
     {
         ;
     }
-    #endregion
+	#endregion
 
-    #region Public Classes
-    public class MetricItem
+	#region Public Classes
+	public class MetricItem
     {
         public string ClassName { get; set; }
-        public double Precision { get; set; } = 0;
-        public double Recall { get; set; } = 0;
-        public double F1Score { get; set; } = 0;
-        public double mAP50 { get; set; } = 0;
-        public double mAP50_95 { get; set; } = 0;
+        public float Precision { get; set; }
+        public float Recall { get; set; }
+		public float F1Score { get; set; }
+        public float mAP50 { get; set; }
+        public float mAP50_95 { get; set; }
     }
     #endregion
 }
