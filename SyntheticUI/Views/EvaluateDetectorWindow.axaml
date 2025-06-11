@@ -7,6 +7,39 @@
              x:Class="SyntheticUI.EvaluateDetectorWindow"
 			 x:DataType="vm:EvaluateDetectorViewModel">
 
-	<TextBlock>Здарова, я EvaluateDetectorViewModel</TextBlock>
+  <Grid Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <TextBlock Grid.Row="0" Text="Оценка модели детектора"
+               FontSize="18" FontWeight="Bold" Margin="0,0,0,10"/>
+
+    <DataGrid Grid.Row="1" 
+              ItemsSource="{Binding Metrics}"
+              AutoGenerateColumns="True"
+				      IsReadOnly="True"
+				      GridLinesVisibility="All"
+				      BorderThickness="1"
+				      BorderBrush="Gray"
+				      CanUserSortColumns="True"
+				      CanUserResizeColumns="True"
+				      MaxHeight="600"
+				      AutoGeneratingColumns="True">
+      <DataGrid.Styles>
+        <Style Selector="DataGrid">
+          <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+          <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        </Style>
+      </DataGrid.Styles>
+    </DataGrid>
+
+    <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10" Margin="0,10,0,0">
+      <Button Content="Загрузить датасет" Command="{Binding LoadDatasetCommand}" Width="150"/>
+      <Button Content="Оценить" Command="{Binding EvaluateCommand}" Width="100"/>
+    </StackPanel>
+  </Grid>
 	
 </UserControl>
