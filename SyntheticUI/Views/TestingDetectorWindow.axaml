@@ -1,12 +1,33 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-			 xmlns:vm="using:SyntheticUI.ViewModels"
+			       xmlns:vm="using:SyntheticUI.ViewModels"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="SyntheticUI.TestingDetectorWindow"
-			 x:DataType="vm:AugmentationClassificatorViewModel">
+			       x:DataType="vm:TestingDetectorViewModel">
 
-	<TextBlock>Здарова, я TestingDetectorViewModel</TextBlock>
+  <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
+    <Border BorderBrush="Gray" BorderThickness="1"
+            Background="LightGray" CornerRadius="4">
+      <Image Width="900" Height="450" Stretch="Uniform"
+             Source="{Binding LoadedImage}"/>
+    </Border>
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
+      <TextBlock Text="{Binding ImageCounter}" VerticalAlignment="Center"/>
+    </StackPanel>
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+      <Button Content="Назад" Command="{Binding PreviousImageCommand}"/>
+      <Button Content="Вперед" Command="{Binding NextImageCommand}"/>
+    </StackPanel>
+
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Spacing="10">
+      <Button Content="Выбрать модель" Command="{Binding SelectModelCommand}"/>
+      <Button Content="Загрузить папку с изображениями" Command="{Binding LoadImageCommand}"/>
+      <Button Content="Отправить на обработку" Command="{Binding SendToWork}"/>
+    </StackPanel>
+  </StackPanel>
 	
 </UserControl>

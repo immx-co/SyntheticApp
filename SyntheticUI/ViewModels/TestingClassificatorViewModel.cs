@@ -10,8 +10,8 @@ using Avalonia.Platform.Storage;
 namespace SyntheticUI.ViewModels;
 
 public class TestingClassificatorViewModel : ReactiveObject, IRoutableViewModel
-	{
-		IServiceProvider _serviceProvider;
+{
+	IServiceProvider _serviceProvider;
 
     public Window? Target => App.Current?.CurrentWindow;
 
@@ -52,11 +52,12 @@ public class TestingClassificatorViewModel : ReactiveObject, IRoutableViewModel
     }
 
     #endregion
-    public TestingClassificatorViewModel(IScreen screen, IServiceProvider serviceProvider)
-		{
-			HostScreen = screen;
 
-			_serviceProvider = serviceProvider;
+    public TestingClassificatorViewModel(IScreen screen, IServiceProvider serviceProvider)
+	{
+		HostScreen = screen;
+
+		_serviceProvider = serviceProvider;
 
         SelectModelCommand = ReactiveCommand.CreateFromTask(SelectModelAsync);
         LoadImageCommand = ReactiveCommand.CreateFromTask(LoadImageAsync);

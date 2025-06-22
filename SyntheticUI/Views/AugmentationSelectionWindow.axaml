@@ -1,0 +1,22 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:vm="using:SyntheticUI.ViewModels"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="SyntheticUI.AugmentationSelectionWindow"
+			       x:DataType="vm:AugmentationSelectionViewModel">
+
+  <StackPanel Margin="10" Spacing="10">
+    <CheckBox Content="Базовая аугментация" IsChecked="{Binding BasicAugmentation}"/>
+    <CheckBox Content="Зашумленная аугментация" IsChecked="{Binding NoisyAugmentation}"/>
+    <CheckBox Content="Геометрическая и цветовая аугментация" IsChecked="{Binding GeometricColorAugmentation}"/>
+    <CheckBox Content="Адаптивные геометрические и цветовые аугментации" IsChecked="{Binding AdaptiveGeometricColorAugmentation}"/>
+
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+      <Button Content="Отмена" Command="{Binding CancelCommand}" Width="80"/>
+      <Button Content="Применить" Command="{Binding ConfirmCommand}" Width="80"/>
+    </StackPanel>
+  </StackPanel>
+
+</UserControl>

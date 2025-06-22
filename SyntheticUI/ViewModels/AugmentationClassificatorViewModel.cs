@@ -9,6 +9,10 @@ using System.Threading;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using SyntheticUI.Views;
+using MsBox;
+using MsBox.Avalonia.Enums;
+using MsBox.Avalonia;
 
 namespace SyntheticUI.ViewModels;
 
@@ -153,7 +157,66 @@ public class AugmentationClassificatorViewModel : ReactiveObject, IRoutableViewM
 
     private async void AugmentClassificator()
     {
-        ;
+        try
+        {
+            var dialog = new Window()
+            {
+                Title = "Выбор типа аугментации",
+                Width = 400,
+                Height = 250,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            };
+
+            var viewModel = new AugmentationSelectionViewModel();
+            var view = new AugmentationSelectionWindow { DataContext = viewModel };
+            dialog.Content = view;
+            // Обработка подтверждения
+            viewModel.ConfirmCommand.Subscribe(async _ =>
+            {
+                var selectedOptions = new List<string>();
+                if (viewModel.BasicAugmentation) selectedOptions.Add("Базовая аугментация");
+                if (viewModel.NoisyAugmentation) selectedOptions.Add("Зашумленная аугментация");
+                if (viewModel.GeometricColorAugmentation) selectedOptions.Add("Геометрическая и цветовая аугментация");
+                if (viewModel.AdaptiveGeometricColorAugmentation) selectedOptions.Add("Адаптивная геометрическая и цветовая аугментация");
+
+                await Task.Delay(1000);
+                if (selectedOptions.Count == 0)
+                {
+                    var warningBox = MessageBoxManager.GetMessageBoxStandard(
+                        "Warning",
+                        "Не выбрано ни одного типа аугментации",
+                        ButtonEnum.Ok,
+                        Icon.Warning);
+                    await warningBox.ShowAsync();
+                    return;
+                }
+
+                dialog.Close();
+
+                var successBox = MessageBoxManager.GetMessageBoxStandard(
+                    "Success",
+                    $"Аугментация успешно выполнена для {selectedOptions.Count} типов:\n{string.Join("\n", selectedOptions)}",
+                    ButtonEnum.Ok,
+                    Icon.Success);
+                await successBox.ShowAsync();
+
+            });
+
+            viewModel.CancelCommand.Subscribe(_ => dialog.Close());
+
+            await dialog.ShowDialog(Target);
+        }
+        catch (Exception ex)
+        {
+            var errorBox = MessageBoxManager.GetMessageBoxStandard(
+                "Ошибка",
+                $"Ошибка при выполнении аугментации: {ex.Message}",
+                ButtonEnum.Ok,
+                Icon.Error);
+            await errorBox.ShowAsync();
+
+            Console.WriteLine($"Ошибка при открытии окна аугментации: {ex.Message}");
+        }
     }
     #endregion
 }

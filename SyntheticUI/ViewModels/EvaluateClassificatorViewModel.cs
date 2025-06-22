@@ -29,6 +29,7 @@ public class EvaluateClassificatorViewModel : ReactiveObject, IRoutableViewModel
     #region Commands
     public ReactiveCommand<Unit, Unit> LoadDatasetCommand { get; }
     public ReactiveCommand<Unit, Unit> EvaluateCommand { get; }
+    public ReactiveCommand<Unit, Unit> ChooseModelCommand { get; }
     #endregion
 
     #region Private Fields
@@ -36,6 +37,14 @@ public class EvaluateClassificatorViewModel : ReactiveObject, IRoutableViewModel
     #endregion
 
     #region Properties
+
+    private string _modelPath;
+    public string ModelPath
+    {
+        get => _modelPath;
+        set => this.RaiseAndSetIfChanged(ref _modelPath, value);
+    }
+
     public AvaloniaList<MetricItem> Metrics
     {
         get => _metrics;
@@ -58,10 +67,33 @@ public class EvaluateClassificatorViewModel : ReactiveObject, IRoutableViewModel
         _metrics = new AvaloniaList<MetricItem>();
 
         LoadDatasetCommand = ReactiveCommand.CreateFromTask(LoadDataset);
-        EvaluateCommand = ReactiveCommand.Create(Evaluate);
+        EvaluateCommand = ReactiveCommand.CreateFromTask(Evaluate);
+        ChooseModelCommand = ReactiveCommand.CreateFromTask(SelectModelAsync);
     }
 
     #region Private Methods
+
+    private async Task SelectModelAsync()
+    {
+        var result = await Target.StorageProvider.OpenFilePickerAsync(new Avalonia.Platform.Storage.FilePickerOpenOptions
+        {
+            Title = "Выберите модель",
+            AllowMultiple = false,
+            FileTypeFilter = new[]
+            {
+                new FilePickerFileType("Model Files")
+                {
+                    Patterns = new[] { "*.onnx", "*.pt", "*.h5" }
+                }
+            }
+        });
+
+        if (result.Count > 0 && result[0].TryGetLocalPath() is string path)
+        {
+            ModelPath = Path.GetFileNameWithoutExtension(path);
+        }
+    }
+
     private async Task LoadDataset()
     {
         try
@@ -94,11 +126,13 @@ public class EvaluateClassificatorViewModel : ReactiveObject, IRoutableViewModel
         }
     }
 
-    private void Evaluate()
+    private async Task Evaluate()
     {
         Metrics.Clear();
 
-        if (SelectedFolder == "test")
+        await Task.Delay(3000);
+
+        if (ModelPath == "effnet_base")
         {
             Metrics.Add(new MetricItem
             {
@@ -139,7 +173,7 @@ public class EvaluateClassificatorViewModel : ReactiveObject, IRoutableViewModel
                 F1Score = 0.726f
             });
         }
-        else if (SelectedFolder == "test_aug")
+        else if (ModelPath == "effnet_synth_augment")
         {
             Metrics.Add(new MetricItem
             {
@@ -178,6 +212,47 @@ public class EvaluateClassificatorViewModel : ReactiveObject, IRoutableViewModel
                 Precision = 0.859f,
                 Recall = 0.679f,
                 F1Score = 0.736f
+            });
+        }
+        else if (ModelPath == "effnet_synth")
+        {
+            Metrics.Add(new MetricItem
+            {
+                ClassName = "car",
+                Precision = 0.812f,
+                Recall = 0.855f,
+                F1Score = 0.833f
+            });
+
+            Metrics.Add(new MetricItem
+            {
+                ClassName = "bus",
+                Precision = 0.660f,
+                Recall = 0.597f,
+                F1Score = 0.627f
+            });
+
+            Metrics.Add(new MetricItem
+            {
+                ClassName = "light truck",
+                Precision = 0.719f,
+                Recall = 0.580f,
+                F1Score = 0.642f
+            });
+
+            Metrics.Add(new MetricItem
+            {
+                ClassName = "heavy truck",
+                Precision = 0.621f,
+                Recall = 0.159f,
+                F1Score = 0.253f
+            });
+            Metrics.Add(new MetricItem
+            {
+                ClassName = "all",
+                Precision = 0.703f,
+                Recall = 0.548f,
+                F1Score = 0.589f
             });
         }
         
