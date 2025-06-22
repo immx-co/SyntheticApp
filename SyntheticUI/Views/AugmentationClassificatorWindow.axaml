@@ -7,22 +7,33 @@
              x:Class="SyntheticUI.Views.AugmentationClassificatorWindow"
 			      x:DataType="vm:AugmentationClassificatorViewModel">
 
-  <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
-    <Border BorderBrush="Gray" BorderThickness="1"
-            Background="LightGray" CornerRadius="4">
-      <Image Width="300" Height="150" Stretch="Uniform"
-             Source="{Binding CurrentImage}"/>
-    </Border>
+	<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
+		<TextBlock Text="{Binding ImageInfo}" HorizontalAlignment="Center"/>
+		
+		<Border BorderBrush="Gray" BorderThickness="1"
+				Background="LightGray" CornerRadius="4">
+			<Image Width="600" Height="300" Stretch="Uniform"
+				   Source="{Binding CurrentImage}"/>
+		</Border>
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
-      <Button Width="150" Height="35" Command="{Binding LoadDatasetCommand}">
-        <TextBlock Text="Загрузить датасет" HorizontalAlignment="Center"/>
-      </Button>
-      <Button Width="150" Height="35" Command="{Binding AugmentClassificatorCommand}">
-        <TextBlock Text="Аугментировать" HorizontalAlignment="Center"/>
-      </Button>
-    </StackPanel>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+			<Button Width="100" Height="35" Command="{Binding PreviousImageCommand}" IsEnabled="{Binding BackwardButtonEnable}">
+				<TextBlock Text="Назад" HorizontalAlignment="Center"/>
+			</Button>
+			<Button Width="100" Height="35" Command="{Binding NextImageCommand}" IsEnabled="{Binding ForwardButtonEnable}">
+				<TextBlock Text="Вперед" HorizontalAlignment="Center"/>
+			</Button>
+		</StackPanel>
 
-  </StackPanel>
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+			<Button Width="150" Height="35" Command="{Binding LoadDatasetCommand}">
+				<TextBlock Text="Загрузить датасет" HorizontalAlignment="Center"/>
+			</Button>
+			<Button Width="150" Height="35" Command="{Binding AugmentClassificatorCommand}">
+				<TextBlock Text="Аугментировать" HorizontalAlignment="Center"/>
+			</Button>
+		</StackPanel>
+
+	</StackPanel>
 	
 </UserControl>

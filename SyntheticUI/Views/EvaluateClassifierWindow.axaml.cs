@@ -14,4 +14,10 @@ public partial class EvaluateClassifierWindow : ReactiveUserControl<EvaluateClas
 		this.WhenActivated(disposables => { });
 		AvaloniaXamlLoader.Load(this);
 	}
+
+    private void DataGrid_AutoGeneratingColumn(object? sender, DataGridAutoGeneratingColumnEventArgs e)
+    {
+        if (e.PropertyName == "Name")
+            e.Cancel = true;
+    }
 }

@@ -7,6 +7,18 @@
              x:Class="SyntheticUI.TestingClassifierWindow"
 			 x:DataType="vm:TestingClassificatorViewModel">
 
-	<TextBlock>Здарова, я TestingClassificatorViewModel</TextBlock>
+	<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
+		<Border BorderBrush="Gray" BorderThickness="1"
+			Background="LightGray" CornerRadius="4">
+			<Image Width="600" Height="300" Stretch="Uniform"
+					Source="{Binding LoadedImage}"/>
+		</Border>
+
+		<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal" Spacing="10">
+			<Button Content="Выбрать модель" Command="{Binding SelectModelCommand}"/>
+			<Button Content="Загрузить изображение" Command="{Binding LoadImageCommand}"/>
+			<Button Content="Отправить на обаботку" Command="{Binding SendToWork}"/>
+		</StackPanel>
+	</StackPanel>
 	
 </UserControl>

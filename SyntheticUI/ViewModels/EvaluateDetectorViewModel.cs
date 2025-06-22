@@ -1,11 +1,8 @@
 ﻿using ReactiveUI;
 using System;
-using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Threading;
 using Avalonia.Collections;
-using Avalonia.Controls;
-using System.Runtime.InteropServices;
 
 namespace SyntheticUI.ViewModels;
 
