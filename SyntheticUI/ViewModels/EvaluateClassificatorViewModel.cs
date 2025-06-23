@@ -38,6 +38,13 @@ public class EvaluateClassificatorViewModel : ReactiveObject, IRoutableViewModel
 
     #region Properties
 
+    private bool _isEvaluating;
+    public bool IsEvaluating
+    {
+        get => _isEvaluating;
+        set => this.RaiseAndSetIfChanged(ref _isEvaluating, value);
+    }
+
     private string _modelPath;
     public string ModelPath
     {
@@ -129,6 +136,7 @@ public class EvaluateClassificatorViewModel : ReactiveObject, IRoutableViewModel
     private async Task Evaluate()
     {
         Metrics.Clear();
+        IsEvaluating = true;
 
         await Task.Delay(3000);
 
@@ -255,6 +263,7 @@ public class EvaluateClassificatorViewModel : ReactiveObject, IRoutableViewModel
                 F1Score = 0.589f
             });
         }
+        IsEvaluating = false;
         
     }
     #endregion

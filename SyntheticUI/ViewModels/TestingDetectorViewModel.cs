@@ -177,6 +177,8 @@ public class TestingDetectorViewModel : ReactiveObject, IRoutableViewModel
 
     private async Task SendToWorkAsync()
     {
+        await Task.Delay(3500);
+
         if (string.IsNullOrEmpty(ModelPath))
         {
             return;

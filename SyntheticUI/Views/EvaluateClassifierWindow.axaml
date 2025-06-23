@@ -38,6 +38,13 @@
 			</DataGrid.Styles>
 		</DataGrid>
 
+    <ProgressBar
+        Width="40"
+        Height="40"
+        IsIndeterminate="True"
+        Foreground="White"
+        IsVisible="{Binding IsEvaluating}"/>
+
 		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10" Margin="0,10,0,0">
       <Button Content="Выбрать модель" Command="{Binding ChooseModelCommand}"></Button>
       <Button Content="Загрузить датасет" Command="{Binding LoadDatasetCommand}"/>
